@@ -1,3 +1,64 @@
+################################
+# Dependencies
+################################
 node_modules/
-dist/
+**/node_modules/
+
+################################
+# Environment variables
+################################
 .env
+.env.*
+!.env.example
+
+################################
+# Build outputs
+################################
+dist/
+build/
+coverage/
+.out/
+
+################################
+# Blockchain artifacts
+################################
+artifacts/
+cache/
+typechain/
+**/artifacts/
+**/cache/
+
+################################
+# Logs
+################################
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+################################
+# OS / Editor files
+################################
+.DS_Store
+Thumbs.db
+
+################################
+# IDE / Editor configs
+################################
+.vscode/
+.idea/
+*.swp
+*.swo
+
+################################
+# Runtime files
+################################
+*.pid
+*.seed
+*.pid.lock
+
+################################
+# Temporary files
+################################
+tmp/
+temp/
