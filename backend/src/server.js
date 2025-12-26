@@ -1,8 +1,8 @@
 // backend/src/server.js
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -12,27 +12,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Import routes
-const authRoutes = require('./routes/authRoutes');
+const authRoutes = require("./routes/authRoutes");
+const recordRoutes = require("./routes/recordRoutes");
 
 // Basic health check route
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'Server is running!', 
+app.get("/health", (req, res) => {
+  res.json({
+    status: "Server is running!",
     timestamp: new Date(),
-    environment: process.env.NODE_ENV 
+    environment: process.env.NODE_ENV,
   });
 });
 
 // API Routes
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/records", recordRoutes);
 
 // MongoDB connection
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ MongoDB connected successfully');
+    console.log("✅ MongoDB connected successfully");
   } catch (error) {
-    console.error('❌ MongoDB connection error:', error.message);
+    console.error("❌ MongoDB connection error:", error.message);
     process.exit(1);
   }
 };
@@ -42,10 +44,13 @@ connectDB();
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error('Error:', err.stack);
-  res.status(500).json({ 
-    error: 'Something went wrong!', 
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
+  console.error("Error:", err.stack);
+  res.status(500).json({
+    error: "Something went wrong!",
+    message:
+      process.env.NODE_ENV === "development"
+        ? err.message
+        : "Internal server error",
   });
 });
 
@@ -53,11 +58,11 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log('🚀========================================🚀');
+  console.log("🚀========================================🚀");
   console.log(`   Server running on port ${PORT}`);
   console.log(`   Health check: http://localhost:${PORT}/health`);
   console.log(`   Environment: ${process.env.NODE_ENV}`);
-  console.log('🚀========================================🚀');
+  console.log("🚀========================================🚀");
 });
 
 module.exports = app;
